@@ -5,23 +5,19 @@ public static String reusableExcel(int rowNumber,int cellNumber) throws IOExcept
 		Sheet sheet = wb.getSheet("Nov 2022 Batch 2");
 			Row row = sheet.getRow(rowNumber);
 			Cell cell = row.getCell(cellNumber);
-			
 			int cellType = cell.getCellType();
 			String value=null;
 				if (cellType==1) {
 					value = cell.getStringCellValue();
-					
 				}else if(cellType==0) {
 					if (DateUtil.isCellDateFormatted(cell)) {
 						Date dateCellValue = cell.getDateCellValue();
 						SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy");
 						value = sd.format(dateCellValue);
-						
 					}else {
 						double numericCellValue = cell.getNumericCellValue();
 						long l =(long) numericCellValue;
 						value = String.valueOf(l);
-						
 					}
-				}
-				return value;
+                                        }
+				        return value;
