@@ -1,23 +1,67 @@
-public static String reusableExcel(int rowNumber,int cellNumber) throws IOException {
-		File file = new File("C:\\Users\\Yuvaraj\\OneDrive\\Desktop\\Attendance Tracker.xlsx");
-		FileInputStream fis = new FileInputStream(file);
-		Workbook wb = new XSSFWorkbook(fis);
-		Sheet sheet = wb.getSheet("Nov 2022 Batch 2");
-			Row row = sheet.getRow(rowNumber);
-			Cell cell = row.getCell(cellNumber);
+ReadExcel File:
+
+public class ReadExcelTest {
+	
+	@Test
+	public void readExcel() throws IOException  {
+	
+	File file = new File("D:\\Murugan\\Java training class notes\\Project Class\\Day 3 Project Class 24 Nov 2022\\HotelBooking.xlsx");
+	FileInputStream fis = new FileInputStream(file);
+	Workbook wb = new XSSFWorkbook(fis);
+	Sheet sheet = wb.getSheet("Sheet1");
+	int rowCount = sheet.getPhysicalNumberOfRows();
+	
+	for (int i = 0; i <rowCount; i++) {
+		Row row = sheet.getRow(i);
+		
+		int cellCount = row.getPhysicalNumberOfCells();
+		for (int j = 0; j < cellCount; j++) {
+			Cell cell = row.getCell(j);
+			
 			int cellType = cell.getCellType();
-			String value=null;
-				if (cellType==1) {
-					value = cell.getStringCellValue();
-				}else if(cellType==0) {
-					if (DateUtil.isCellDateFormatted(cell)) {
-						Date dateCellValue = cell.getDateCellValue();
-						SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy");
-						value = sd.format(dateCellValue);
-					}else {
-						double numericCellValue = cell.getNumericCellValue();
-						long l =(long) numericCellValue;
-						value = String.valueOf(l);
-					}
-                                        }
-				        return value;
+			
+			if (cellType==1) {
+			String value = cell.getStringCellValue();
+			System.out.println(value);
+				
+			}else if(cellType==0) {
+				
+			if (DateUtil.isCellDateFormatted(cell)) {
+			Date dateCellValue = cell.getDateCellValue();
+			SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy");
+			String value = sd.format(dateCellValue);
+			System.out.println(value);
+					
+			}else {
+					
+			double numericCellValue = cell.getNumericCellValue();
+			long l =(long) numericCellValue;
+			String value = String.valueOf(l);
+					
+			System.out.println(value);
+	} } }
+	} } }   
+============================================================
+Write Excel File:
+
+public class WriteExceltest {
+	
+	@Test
+	public void excelWrite() throws IOException {
+
+		File file = new File("D:\\Murugan\\Java training class notes\\Project Class\\Day 3 Project Class 24 Nov 2022\\HotelBooking.xlsx");
+
+		FileInputStream fis = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sheet = wb.getSheet("Sheet3");
+		XSSFRow createRow = sheet.createRow(0);
+		XSSFCell createCell = createRow.createCell(0);
+		createCell.setCellValue("Murugan Sangamithra");
+		
+		FileOutputStream fos =new FileOutputStream(file);
+		wb.write(fos);
+		wb.close();
+	}  }
+    
+=====================================================================
+
